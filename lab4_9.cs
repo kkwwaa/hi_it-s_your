@@ -189,11 +189,12 @@ namespace lab4
                             n = array.Length;
                             Console.WriteLine("Введите число M");
                             int m = Convert(Console.ReadLine(), 0, int.MaxValue);
+                            m %=n;
                             int[] arr_sd = new int[n];
 
                             for (int i = 0; i < n; i++)
                             {
-                                arr_sd[i] = array[(n - m + i) % n];
+                                arr_sd[i] = array[(n+i-m)%n];
                             }
                             foreach (int x in arr_sd) { Console.Write($"{x} "); }
                             array = arr_sd;
