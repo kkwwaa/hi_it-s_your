@@ -42,7 +42,7 @@ namespace lab4
                 Console.Write("Выберите пункт: ");
                 #endregion 
 
-                int choice = Convert(Console.ReadLine(), 1, 9);
+                int choice = Convert(Console.ReadLine(), 1, 8);
 
                 switch (choice)
                 {
@@ -50,7 +50,7 @@ namespace lab4
                         Console.WriteLine("Выберите способ формирования массива:");
                         Console.WriteLine("1. Случайные числа");
                         Console.WriteLine("2. Ввод с клавиатуры");
-                        int subChoice = int.Parse(Console.ReadLine());
+                        int subChoice = Convert(Console.ReadLine(), 1, 2);
 
                         switch (subChoice)
                         {
@@ -149,7 +149,7 @@ namespace lab4
 
                             Console.WriteLine("1. Случайные числа");
                             Console.WriteLine("2. Ввод с клавиатуры");
-                            subChoice = int.Parse(Console.ReadLine());
+                            subChoice = Convert(Console.ReadLine(), 1,2);
 
                             switch (subChoice)
                             {
