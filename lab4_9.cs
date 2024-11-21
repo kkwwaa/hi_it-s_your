@@ -38,6 +38,7 @@ namespace lab4
                 Console.WriteLine("5. Сдвинуть циклически на M элементов вправо");
                 Console.WriteLine("6. Поиск первого четного элемента в массиве");
                 Console.WriteLine("7. Выполнить сортировку простым включением для массива");
+                Console.WriteLine("8. Бинарный поиск")
                 Console.WriteLine("8. Выход");
                 Console.Write("Выберите пункт: ");
                 #endregion 
@@ -256,6 +257,35 @@ namespace lab4
                         break;
 
                     case 8:
+                        if (array.Length != 0){
+                            n=array.Length;
+                            Console.WriteLine("Введите число для поиска");
+                            int x = Convert(Console.ReadLine(), int.MinValue, int.MaxValue);
+                            int cnt=0;
+                            int metka=0;
+                            int l=0;
+                            int r=n;
+                            while (l<=r){
+                                int mid=(l+r)/2;
+                                if (array[mid]==x) {
+                                    metka=1;
+                                    Console.WriteLine($"Элемент найден, проведено {cnt} сравнений");
+                                    break;
+                                }
+                                else if (array[mid] < x) {
+                                    l=mid+1;
+                                    cnt+=2;
+                                }
+                                else {
+                                    r=mid-1;
+                                    cnt+=2;
+                                }
+                            }
+                            if (metka==0) Console.WriteLine("Не найдено");
+                        }
+                        break;
+
+                    case 9:
                         exit = true;
                         break;
 
