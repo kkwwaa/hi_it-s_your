@@ -8,6 +8,51 @@ namespace lab4
 {
     internal class Program
     {
+        static int BinSearch(int[] array, int num)
+        {
+            int l = 0, r = array.Length, mid = 0, count = 0;
+            while (l <= r)
+            {
+                mid = (l + r) / 2;
+                if (array[mid] == num) return count + 1;
+                else if (array[mid] < num) l = mid + 1;
+                else r = mid - 1;
+                count += 2;
+            }
+            return -1;
+        }
+        static void QuickSort(int[] array, int left, int right)
+        {
+            if (left < right)
+            {
+                int pivotIndex = Partition(array, left, right);
+                QuickSort(array, left, pivotIndex - 1);
+                QuickSort(array, pivotIndex + 1, right);
+            }
+        }
+        static int Partition(int[] array, int left, int right)
+        {
+            int pivot = array[right];
+            int i = left - 1;
+
+            for (int j = left; j < right; j++)
+            {
+                if (array[j] < pivot)
+                {
+                    i++;
+                    Swap(array, i, j);
+                }
+            }
+
+            Swap(array, i + 1, right);
+            return i + 1;
+        }
+        static void Swap(int[] array, int a, int b)
+        {
+            int temp = array[a];
+            array[a] = array[b];
+            array[b] = temp;
+        }
         public static int Convert(string input, int l, int r)
         {
             int n;
@@ -38,12 +83,12 @@ namespace lab4
                 Console.WriteLine("5. Сдвинуть циклически на M элементов вправо");
                 Console.WriteLine("6. Поиск первого четного элемента в массиве");
                 Console.WriteLine("7. Выполнить сортировку простым включением для массива");
-                Console.WriteLine("8. Бинарный поиск")
-                Console.WriteLine("8. Выход");
+                Console.WriteLine("8. Бинарный поиск в массиве с использованием быстрой сортировки");
+                Console.WriteLine("9. Выход");
                 Console.Write("Выберите пункт: ");
                 #endregion 
 
-                int choice = Convert(Console.ReadLine(), 1, 8);
+                int choice = Convert(Console.ReadLine(), 1, 9);
 
                 switch (choice)
                 {
@@ -51,7 +96,7 @@ namespace lab4
                         Console.WriteLine("Выберите способ формирования массива:");
                         Console.WriteLine("1. Случайные числа");
                         Console.WriteLine("2. Ввод с клавиатуры");
-                        int subChoice = Convert(Console.ReadLine(), 1, 2);
+                        int subChoice = Convert(Console.ReadLine(), 1,2);
 
                         switch (subChoice)
                         {
@@ -108,7 +153,7 @@ namespace lab4
                             int count = 0;
                             foreach (int x in array)
                             {
-                                if (x < avg)
+                                if (x <= avg)
                                 {
                                     count++;
                                 }
@@ -119,7 +164,7 @@ namespace lab4
                             int index = 0;
                             foreach (int x in array)
                             {
-                                if (x < avg)
+                                if (x <= avg)
                                 {
                                     newArray[index++] = x;
                                 }
@@ -190,12 +235,12 @@ namespace lab4
                             n = array.Length;
                             Console.WriteLine("Введите число M");
                             int m = Convert(Console.ReadLine(), 0, int.MaxValue);
-                            m %=n;
+                            m %= n;
                             int[] arr_sd = new int[n];
 
                             for (int i = 0; i < n; i++)
                             {
-                                arr_sd[i] = array[(n+i-m)%n];
+                                arr_sd[i] = array[(n+i-m) % n];
                             }
                             foreach (int x in arr_sd) { Console.Write($"{x} "); }
                             array = arr_sd;
@@ -213,7 +258,7 @@ namespace lab4
                             {
                                 if (array[i] %2== 0)
                                 {
-                                    Console.WriteLine($"Первый четный элемент в массиве {array[i]} находится на позиции {i + 1}, было произведено {i+1} сравнений");
+                                    Console.WriteLine($"Первый четный элемент в массиве {array[i]} находится на позиции {i + 1}");
                                     cnt++;
                                     break;
                                 }
@@ -257,32 +302,20 @@ namespace lab4
                         break;
 
                     case 8:
-                        if (array.Length != 0){
-                            n=array.Length;
-                            Console.WriteLine("Введите число для поиска");
-                            int x = Convert(Console.ReadLine(), int.MinValue, int.MaxValue);
-                            int cnt=0;
-                            int metka=0;
-                            int l=0;
-                            int r=n;
-                            while (l<=r){
-                                int mid=(l+r)/2;
-                                if (array[mid]==x) {
-                                    metka=1;
-                                    Console.WriteLine($"Элемент найден, проведено {cnt} сравнений");
-                                    break;
-                                }
-                                else if (array[mid] < x) {
-                                    l=mid+1;
-                                    cnt+=2;
-                                }
-                                else {
-                                    r=mid-1;
-                                    cnt+=2;
-                                }
-                            }
-                            if (metka==0) Console.WriteLine("Не найдено");
+                        if (array.Length != 0)
+                        {
+                            n = array.Length;
+                            Console.WriteLine("Введите число X");
+                            int num = Convert(Console.ReadLine(), int.MinValue, int.MaxValue);
+                            int[] array_srt = array;
+                            QuickSort(array_srt, 0, n - 1);
+
+                            int count = BinSearch(array_srt, num);
+                            if (count > -1) Console.WriteLine($"Элемент {num} найден, было проведено {count} сравнений");
+                            else Console.WriteLine($"Элемент {num} в массиве не найден");
                         }
+                        else
+                            Console.WriteLine("Массив не задан.");
                         break;
 
                     case 9:
